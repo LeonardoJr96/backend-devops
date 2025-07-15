@@ -1,3 +1,5 @@
+import os
+
 """
 Django settings for backend project.
 
@@ -78,13 +80,14 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'meubanco',
-        'USER': 'usuario',
-        'PASSWORD': 'senha123',
-        'HOST': 'postgres',   # nome do serviço do Postgres no k8s
-        'PORT': '5432',
+        'NAME': os.getenv('DB_NAME', 'meubanco'),
+        'USER': os.getenv('DB_USER', 'usuario'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'senha123'),
+        'HOST': os.getenv('DB_HOST', 'postgres'),  # padrão = 'postgres' (para Docker/K8s)
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
+
 
 
 # Password validation
